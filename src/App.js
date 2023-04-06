@@ -1,17 +1,17 @@
+import { useState } from "react";
 import "./App.css";
-import Component from "./Component";
-import Component1 from "./Component1";
-import Footer from "./Footer";
-import Header from "./Header";
+import StateAndProp from "./StateAndProp";
+import Second from "./Second";
 
 function App() {
+  const [name, setname] = useState("Mani");
+  const [email, setemail] = useState("mani@gamil.com");
   return (
     <div className="App">
       <h1>Hello</h1>
-      <Header />
-      <Component />
-      <Component1 />
-      <Footer />
+      {name}
+      <StateAndProp name={name} email={email} />
+      <Second name={name} email={email} />
     </div>
   );
 }
