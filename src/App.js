@@ -1,30 +1,47 @@
-import { useState } from "react";
 import "./App.css";
-import StateAndProp from "./StateAndProp";
-import Second from "./Second";
+import { useEffect, useState } from "react";
+import productsData from "./products.json";
 
 function App() {
-  const [first, setfirst] = useState("Welcome");
-  const [name, setname] = useState("Mani");
-  const [email, setemail] = useState("mani@gamil.com");
-  const [phone, setphone] = useState(9483947391);
-  const [age, setage] = useState(20);
+  const [textinput, settextinput] = useState("");
+  const [products, setproducts] = useState(productsData);
+
+  useEffect(() => {
+    let filteredData = productsData.filter((product) =>
+      product.name.toLowerCase().includes(textinput.toLowerCase())
+    );
+    setproducts(filteredData);
+  }, [textinput]);
+
   return (
     <div className="App">
-      <h1>Hello</h1>
-      {name}
-      <button onClick={() => setfirst("this is React Class 2 ")}>
-        My state change
-      </button>
-
-      <StateAndProp
-        first={first}
-        name={name}
-        email={email}
-        phone={phone}
-        age={age}
-      />
-      <Second name={name} email={email} phone={phone} />
+      <div className="header">
+        <h1>Mani's Music Store</h1>
+        <input
+          type="text"
+          name="name"
+          onChange={(e) => settextinput(e.target.value)}
+        />
+      </div>
+      <div className="product-list">
+        {products.map((product) => (
+          <div className="product" key={product.id}>
+            <img src={product.img} alt={product.name} />
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <h3>${product.price}</h3>
+            <button
+              onClick={() =>
+                window.open(
+                  `https://web.whatsapp.com/send?phone=919150813919&text=please send ${product.name}`
+                )
+              }
+            >
+              Buy on whatsapp
+            </button>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
